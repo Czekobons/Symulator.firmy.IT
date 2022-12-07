@@ -54,6 +54,9 @@ public class ProjectGenerator {
                 break;
         }
     }
+    private void projectTitle() {
+
+    }
     public String[] getChoosedBranch() {
         return choosedBranch;
     }
