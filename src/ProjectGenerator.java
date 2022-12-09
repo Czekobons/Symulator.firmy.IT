@@ -1,9 +1,11 @@
 import java.util.Random;
 
 public class ProjectGenerator {
-    String projectName;
     String[] branches = {"Front-end", "Back-end", "Wordpress", "Baza danych", "PretaShop", "Mobile"};
+    String[] temp = {"Front-end", "Back-end", "Wordpress", "Baza danych", "PretaShop", "Mobile"};
+    DataBase dataBase = new DataBase();
     public String[] choosedBranch = new String[branches.length];
+    String projectName;
     Integer hoursFrontEnd;
     Integer hoursBackEnd;
     Integer hoursDataBase;
@@ -21,6 +23,7 @@ public class ProjectGenerator {
     public ProjectGenerator() {
         projectLevel = getRandomNumber(1, 4);
         neededTechnologies();
+        generateProjectTitle();
     }
     private int getRandomNumber(int min, int max) {
         return (int) ((Math.random() * (max - min)) + min);
@@ -32,7 +35,6 @@ public class ProjectGenerator {
     private  void chooseBranch(int min, int max) {
         int random =getRandomNumber(min ,max);
         for(int i=0;i<random;i++) {
-            String temp[] = branches;
             int x =getRandomNumber(0, branches.length);
             if(temp[x]!=null) {
                 choosedBranch[i] = temp[x];
@@ -54,11 +56,22 @@ public class ProjectGenerator {
                 break;
         }
     }
-    private void projectTitle() {
-
+    public void generateProjectTitle() {
+        for(int i=0; i< branches.length;i++) {
+            for(int j=0; j< choosedBranch.length;j++) {
+                if(choosedBranch[j]!=null&&choosedBranch[j].equals(branches[i])) {
+                    if(i==1||i==2||i==3) {
+                        System.out.println(dataBase.backendName[0]);
+                    }
+                }
+            }
+        }
     }
     public String[] getChoosedBranch() {
         return choosedBranch;
+    }
+    public String getChoosedBranch(int a) {
+        return choosedBranch[a];
     }
 
 }

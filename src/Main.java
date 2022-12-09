@@ -14,14 +14,14 @@ public class Main {
         while(working) {
             System.out.println(day+"."+month+"."+year+". Dzien: "+dayCount);
             ProjectGenerator[] project = new ProjectGenerator[100];
-            for(int i=0;i<100;i++) {
+            for(int i=0;i<10;i++) {
                 project[i] = new ProjectGenerator();
-                System.out.print(project[i].getProjectLevel()+": ");
+                /*System.out.print(project[i].getProjectLevel()+": ");
                 for(String x: project[i].choosedBranch) {
                     if(x!=null) {
                         System.out.print(x+" ");
                     }
-                }
+                }*/
                 System.out.println();
             }
             System.out.println();
