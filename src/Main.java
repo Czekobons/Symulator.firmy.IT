@@ -1,34 +1,31 @@
 import java.util.Scanner;
 
 public class Main {
+
     public static void main(String[] args) {
         Menu menu = new Menu();
         boolean working = true;
-        int day = 1;
-        int month = 1;
-        int year = 2020;
-        int dayCount = 1;
+        TimeManagment time = new TimeManagment();
+        ProjectGenerator[] projectInProgress = new ProjectGenerator[100];
+        Integer dayCount = 1;
 
+
+        for(int i=0;i<3;i++) {
+            menu.project[i] = new ProjectGenerator();
+            System.out.println(menu.project[i].dayToDeadLine);
+        }
 
         System.out.println("Witaj w symulatorze firmy IT!");
         while(working) {
-            System.out.println(day+"."+month+"."+year+". Dzien: "+dayCount);
-            ProjectGenerator[] project = new ProjectGenerator[100];
-            for(int i=0;i<10;i++) {
-                project[i] = new ProjectGenerator();
-                /*System.out.print(project[i].getProjectLevel()+": ");
-                for(String x: project[i].choosedBranch) {
-                    if(x!=null) {
-                        System.out.print(x+" ");
-                    }
-                }*/
-                System.out.println();
-            }
+            System.out.println(time.getGameDay()+"."+time.getGameMonth()+"."+time.getGameYear()+". Dzien: "+dayCount);
+
             System.out.println();
             menu.showMenuList();
+            time.nextDay();
             dayCount++;
         }
     }
+
 
 
 

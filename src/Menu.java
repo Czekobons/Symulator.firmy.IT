@@ -1,6 +1,7 @@
 import java.util.Scanner;
 
 public class Menu {
+    ProjectGenerator[] project = new ProjectGenerator[100];
     public void showMenuList() {
         Scanner scan = new Scanner(System.in);
 
@@ -16,10 +17,10 @@ public class Menu {
         System.out.println("9. Porzuc swoja firme i zatrudnij sie na etat.");
         System.out.print("Wybierz jedno z polecen wybierajac odpowiednia cyfre:");
 
-        Short choosedAction = scan.nextShort();
-        chooseAction(choosedAction);
+        Short chosedAction = scan.nextShort();
+        choseAction1(chosedAction);
     }
-    public void chooseAction(Short action)  {
+    public void choseAction1(Short action)  {
         switch (action) {
             case 1:
                 System.out.println("Monday");
@@ -43,11 +44,14 @@ public class Menu {
                 System.out.println("Sunday");
                 break;
             case 8:
-                System.out.flush();
+                System.out.println("\u001B[2J");
                 showMenuCompanyManagement();
                 break;
             case 9:
                 System.exit(0);
+                break;
+            case 12:
+                showProject(project[0]);
                 break;
         }
     }
@@ -59,7 +63,44 @@ public class Menu {
         System.out.println("4. Sprawdz stan konta firmy.");
         System.out.println("5. Wroc do glownego menu.");
         System.out.print("Wybierz jedno z polecen wybierajac odpowiednia cyfre:");
-        Short choosedAction = scan.nextShort();
+        Short chosedAction = scan.nextShort();
+        choseAction2(chosedAction);
+    }
+    public void choseAction2(Short action)  {
+        switch (action) {
+            case 1:
+                System.out.println("Monday");
+                break;
+            case 2:
+                System.out.println("Tuesday");
+                break;
+            case 3:
+                System.out.println("Wednesday");
+                break;
+            case 4:
+                System.out.println("Thursday");
+                break;
+            case 5:
+                showMenuList();
+                break;
+        }
+    }
+    public void showProject(ProjectGenerator project) {
+        System.out.println(project.getProjectTitle());
+        project.showOursNeeded();
+        System.out.println("Czas ukończnia: "+project.getDayToDeadLine()+" dni.");
+        System.out.println("Kara za przekroczenie terminu: "+project.getPenalty()+"$.");
+        System.out.println("Wartosc projektu: "+project.getProjectValue()+"$.");
+        if(project.getProjectLevel()==1) {
+            System.out.println("Poziom projektu: latwy.");
+        }
+        else if(project.getProjectLevel()==2) {
+            System.out.println("Poziom projektu: sredni.");
+        }
+        else {
+            System.out.println("Poziom projektu: zlozony.");
+        }
+
     }
 
 }
