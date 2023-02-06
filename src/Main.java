@@ -22,8 +22,11 @@ public class Main {
             menu.showMenuList();
             time.nextDay();
             dayCount++;
+            menu.timeForProjects();
+            menu.chceckIfFinished();
+            menu.delayedPayments();
             try {
-                Thread.sleep(4000);
+                Thread.sleep(2000);
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
             }

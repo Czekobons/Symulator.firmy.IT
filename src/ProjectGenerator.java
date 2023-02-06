@@ -8,17 +8,18 @@ public class ProjectGenerator {
     final Integer level1Hours = 10;
     final Integer level2Hours = 100;
     final Integer level3Hours = 1000;
+
+    public Boolean wasTested = false;
     String projectName;
     Integer allHoursNeed;
     int[] hoursNeededTab = new int[branches.length];
-    int[] hoursDoneTab = new int[branches.length];
-    String client;
+    int[] hoursLeftTab = new int[branches.length];
     Integer dayToDeadLine;
     Integer deadLineDay, deadLineMonth, deadLineYear;
     Double penalty;
     Double projectValue;
     Integer dayPayday, monthPayday, yearPayday;
-
+    public Client client;
     Integer projectLevel;
 
     public ProjectGenerator() {
@@ -27,8 +28,15 @@ public class ProjectGenerator {
         generateProjectTitle();
         generateHoursNeeded();
         generateDeadLine();
+        client = new Client(getRandomNumber(1, 3), getRandomNumber(0, 2));
         generateProjectValue();
         generatePenalty();
+        hourleftTabFill();
+    }
+    public void hourleftTabFill() {
+        for (int i=0;i<hoursNeededTab.length; i++) {
+            hoursLeftTab[i] = hoursNeededTab[i];
+        }
     }
     private  void chooseBranch(int min, int max) {
         int random =getRandomNumber(min ,max);
@@ -198,6 +206,13 @@ public class ProjectGenerator {
         for(int i=0;i<branches.length;i++) {
             if(hoursNeededTab[i]!=0) {
                 System.out.println(branches[i] + ": " + hoursNeededTab[i]);
+            }
+        }
+    }
+    public void showOursLeft() {
+        for(int i=0;i<branches.length;i++) {
+            if(hoursLeftTab[i]!=0) {
+                System.out.println(branches[i] + ": " + hoursLeftTab[i]);
             }
         }
     }
