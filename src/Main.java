@@ -6,13 +6,12 @@ public class Main {
         Menu menu = new Menu();
         boolean working = true;
         TimeManagment time = new TimeManagment();
-        ProjectGenerator[] projectInProgress = new ProjectGenerator[100];
+
         Integer dayCount = 1;
 
 
         for(int i=0;i<3;i++) {
             menu.project[i] = new ProjectGenerator();
-            System.out.println(menu.project[i].dayToDeadLine);
         }
 
         System.out.println("Witaj w symulatorze firmy IT!");
@@ -23,6 +22,11 @@ public class Main {
             menu.showMenuList();
             time.nextDay();
             dayCount++;
+            try {
+                Thread.sleep(4000);
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
         }
     }
 

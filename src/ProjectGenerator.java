@@ -1,8 +1,3 @@
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Random;
-
 public class ProjectGenerator {
     String[] branches = {"Front-end", "Back-end", "Wordpress", "Baza danych", "PretaShop", "Mobile"};
     String[] temp = {"Front-end", "Back-end", "Wordpress", "Baza danych", "PretaShop", "Mobile"};
@@ -16,6 +11,7 @@ public class ProjectGenerator {
     String projectName;
     Integer allHoursNeed;
     int[] hoursNeededTab = new int[branches.length];
+    int[] hoursDoneTab = new int[branches.length];
     String client;
     Integer dayToDeadLine;
     Integer deadLineDay, deadLineMonth, deadLineYear;
@@ -27,7 +23,7 @@ public class ProjectGenerator {
 
     public ProjectGenerator() {
         projectLevel = getRandomNumber(1, 4);
-        neededTechnologies();
+        generateTechnologies();
         generateProjectTitle();
         generateHoursNeeded();
         generateDeadLine();
@@ -47,7 +43,7 @@ public class ProjectGenerator {
             }
         }
     }
-    private void neededTechnologies() {
+    private void generateTechnologies() {
         choosedBranch[0] = branches[getRandomNumber(0, branches.length)];
         switch (projectLevel) {
             case 2:
@@ -58,7 +54,7 @@ public class ProjectGenerator {
                 break;
         }
     }
-    public void generateProjectTitle() {
+    private void generateProjectTitle() {
         for(int i=0; i< branches.length;i++) {
             for(int j=0; j< choosedBranch.length;j++) {
                 if(choosedBranch[j]!=null&&choosedBranch[j].equals(branches[i])) {
@@ -105,7 +101,7 @@ public class ProjectGenerator {
             }
         }
     }
-    public void generateHoursNeeded() {
+    private void generateHoursNeeded() {
         int temp = 0;
         if(projectLevel==1) {
             temp = level1Hours;
@@ -149,30 +145,32 @@ public class ProjectGenerator {
             }
         }
     }
-    public void generateDeadLine() {
+    private void generateDeadLine() {
         if(projectLevel==1) {
-            dayToDeadLine = allHoursNeed/getRandomNumber(4, 6);
-            System.out.println(dayToDeadLine);
+            if(allHoursNeed<6) {
+                dayToDeadLine =1;
+            }
+            else {
+                dayToDeadLine = allHoursNeed/getRandomNumber(4, 6);
+            }
         }
         else if(projectLevel==2) {
             dayToDeadLine = allHoursNeed/getRandomNumber(7, 12);
-            System.out.println(dayToDeadLine);
         }
         else {
             dayToDeadLine = allHoursNeed/getRandomNumber(13, 20);
-            System.out.println(dayToDeadLine);
         }
     }
-    public void generateProjectValue() {
+    private void generateProjectValue() {
         projectValue = Double.valueOf((projectLevel*allHoursNeed*getChoosedBranch().length)/dayToDeadLine*100);
     }
-    public void generatePenalty() {
+    private void generatePenalty() {
         penalty = projectValue/10;
     }
     public void getDeadLineDate() {
 
     }
-    private int getRandomNumber(int min, int max) {
+    int getRandomNumber(int min, int max) {
         return (int) ((Math.random() * (max - min)) + min);
     }
     public Double getPenalty() {
