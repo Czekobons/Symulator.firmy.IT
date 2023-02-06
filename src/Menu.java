@@ -11,6 +11,8 @@ public class Menu {
     public Double companyCash = 2000.0;
     public List<Double> delayedPaymentValue = new ArrayList<>();
     public List<Integer> delayedPaymentTime = new ArrayList<>();
+    public int dealWithBurdens = 0;
+
     public void showMenuList() {
         Scanner scan = new Scanner(System.in);
         System.out.println("-----------------------------------------------------------------------------");
@@ -66,13 +68,22 @@ public class Menu {
                 returnFinishedProject();
                 break;
             case 6:
-                System.out.println("Saturday");
+                System.out.println("Zatrudnij pracownika, Work in Progress");
                 break;
             case 7:
-                System.out.println("Sunday");
+                System.out.println("Zwolnij pracownika, Work in Progress");
                 break;
             case 8:
-                System.out.println("Sunday");
+                dealWithBurdens++;
+                if(dealWithBurdens==1) {
+                    System.out.println("Wszytskie dziejsze formalnosci zotaly dopelnione, bedziesz musial odbyc jeszcze jedna wizyte w urzadzie.");
+                }else if(dealWithBurdens==2) {
+                    System.out.println("Wszytskie formalnosci zotaly dopelnione, w tym miesiącu jestes bezpieczny");
+                }
+                else {
+                    System.out.println("Wszystkie formalnosci zostaly juz dopelnione w tym miesiace, mozesz skupic sie na pracy");
+                    pressEnterToCont();
+                }
                 break;
             case 9:
                 System.out.println("\u001B[2J");
@@ -91,6 +102,7 @@ public class Menu {
     public void returnFinishedProject() {
         if(projectsFinished[0] == null) {
             System.out.println("Nie masz projektow gotowych do oddania.");
+            pressEnterToCont();
             return;
         }
         Scanner scan = new Scanner(System.in);
@@ -161,6 +173,7 @@ public class Menu {
     public void testCode() {
         if(projectsFinished[0] == null) {
             System.out.println("Nie masz ukonczonych projektow ktorych kod moglbys testowac.");
+            pressEnterToCont();
             return;
         }
         Scanner scan = new Scanner(System.in);
@@ -232,12 +245,6 @@ public class Menu {
                         if (projectsFinished[k] == null) {
                             projectsFinished[k] = projectsInProgress[i];
                             projectsInProgress[i] = null;
-                        } else {
-                            try {
-                                throw new Exception("ProjectsFinished tab full");
-                            } catch (Exception e) {
-                                throw new RuntimeException(e);
-                            }
                         }
                     }
                 }
@@ -291,10 +298,10 @@ public class Menu {
         System.out.println("3. Sprawdz dostepnych pracownikow.");
         System.out.println("4. Sprawdz stan konta firmy.");
         System.out.println("5. Wroc do glownego menu.");
+        System.out.println("-----------------------------------------------------------------------------");
         System.out.print("Wybierz jedno z polecen wybierajac odpowiednia cyfre:");
         Short chosedAction = scan.nextShort();
         choseAction2(chosedAction);
-        System.out.println("-----------------------------------------------------------------------------");
     }
 
     public void choseAction2(Short action) {
@@ -307,10 +314,11 @@ public class Menu {
                 checkAvalibleProject();
                 break;
             case 3:
-                System.out.println("Wednesday");
+                System.out.println("Work in Progress");
                 break;
             case 4:
                 System.out.println("Stan twojego konta to obecnie: "+companyCash);
+                pressEnterToCont();
                 break;
             case 5:
                 showMenuList();
@@ -329,6 +337,7 @@ public class Menu {
         }
         if (!projectsAvaiable) {
             System.out.println("Nie masz obecnie żadnych projektów w trakcie realizacji.");
+            showMenuList();
         }
     }
 
@@ -401,7 +410,7 @@ public class Menu {
         System.out.print("Nacisnij enter aby wyjsc...");
         Scanner scan = new Scanner(System.in);
         scan.nextLine();
-        showMenuCompanyManagement();
+        showMenuList();
     }
 
 }

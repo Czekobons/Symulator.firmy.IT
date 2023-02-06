@@ -25,8 +25,17 @@ public class Main {
             menu.timeForProjects();
             menu.chceckIfFinished();
             menu.delayedPayments();
+            if(time.getGameDay()==1 && dayCount != 1) {
+                if(menu.dealWithBurdens <2) {
+                    System.out.println("Przykro mi ale skarbowka wjechala z kontrola, mozemy zamykac interes. Milo sie z toba pracowalo");
+                    System.exit(0);
+                }
+                else {
+                    menu.dealWithBurdens = 0;
+                }
+            }
             try {
-                Thread.sleep(2000);
+                Thread.sleep(1000);
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
             }
