@@ -4,7 +4,6 @@ import java.util.Scanner;
 
 public class Menu {
     ProjectGenerator[] project = new ProjectGenerator[100];
-    ArrayList<ProjectGenerator> projectInProgress = new ArrayList<ProjectGenerator>();
     ProjectGenerator[] projectsInProgress = new ProjectGenerator[100];
     ProjectGenerator[] projectsFinished = new ProjectGenerator[100];
     int newClient = 0;
@@ -75,12 +74,11 @@ public class Menu {
                 break;
             case 8:
                 dealWithBurdens++;
-                if(dealWithBurdens==1) {
+                if (dealWithBurdens == 1) {
                     System.out.println("Wszytskie dziejsze formalnosci zotaly dopelnione, bedziesz musial odbyc jeszcze jedna wizyte w urzadzie.");
-                }else if(dealWithBurdens==2) {
+                } else if (dealWithBurdens == 2) {
                     System.out.println("Wszytskie formalnosci zotaly dopelnione, w tym miesiącu jestes bezpieczny");
-                }
-                else {
+                } else {
                     System.out.println("Wszystkie formalnosci zostaly juz dopelnione w tym miesiace, mozesz skupic sie na pracy");
                     pressEnterToCont();
                 }
@@ -100,13 +98,12 @@ public class Menu {
     }
 
     public void returnFinishedProject() {
-        if(projectsFinished[0] == null) {
+        if (projectsFinished[0] == null) {
             System.out.println("Nie masz projektow gotowych do oddania.");
             pressEnterToCont();
             return;
         }
         Scanner scan = new Scanner(System.in);
-        boolean avaibleProjects = false;
         int[] projectTemp = new int[100];
         int temp = 1;
         for (int i = 0; i < projectsFinished.length; i++) {
@@ -121,57 +118,54 @@ public class Menu {
         System.out.print("Wybierz jeden z dostepnych projektów ktory chcesz oddac: ");
         Short chosedAction = scan.nextShort();
         projectsFinished[projectTemp[chosedAction]].client.chance();
-        if(projectsFinished[projectTemp[chosedAction]].client.noPayment) {
+        if (projectsFinished[projectTemp[chosedAction]].client.noPayment) {
             System.out.println("Niestety ale twoj klient uciekl z projektem bez zaplaty.");
             projectsFinished[projectTemp[chosedAction]] = null;
             return;
         }
-        if(projectsFinished[projectTemp[chosedAction]].client.returningUnworkingProject && !projectsFinished[projectTemp[chosedAction]].wasTested) {
+        if (projectsFinished[projectTemp[chosedAction]].client.returningUnworkingProject && !projectsFinished[projectTemp[chosedAction]].wasTested) {
             System.out.println("Niestety oddalas klientowi nie sprawny kod i nie zaplaci Tobie za ten projekt.");
             projectsFinished[projectTemp[chosedAction]] = null;
             return;
         }
-        if(projectsFinished[projectTemp[chosedAction]].dayToDeadLine < -7) {
+        if (projectsFinished[projectTemp[chosedAction]].dayToDeadLine < -7) {
             System.out.println("Niestety ale twoj projekt jest zbyt opozniony, nie otrzymasz zadnej zaplaty, ciesz sie, ze nie otrzymujesz jeszcze kary.");
             projectsFinished[projectTemp[chosedAction]] = null;
             return;
         }
-        if(projectsFinished[projectTemp[chosedAction]].dayToDeadLine < 0 && projectsFinished[projectTemp[chosedAction]].dayToDeadLine >= -7) {
-            if(projectsFinished[projectTemp[chosedAction]].client.noPenalty) {
+        if (projectsFinished[projectTemp[chosedAction]].dayToDeadLine < 0 && projectsFinished[projectTemp[chosedAction]].dayToDeadLine >= -7) {
+            if (projectsFinished[projectTemp[chosedAction]].client.noPenalty) {
                 System.out.println("Co prawda oddales projekt po czasie ale twoj klient byl wyrozumialy i nie obiciazy cie kara.");
-            }
-            else {
+            } else {
                 System.out.println("Niestety oddalas projekt po czasie wiec muszisz zaplacic kare.");
                 companyCash -= projectsFinished[projectTemp[chosedAction]].getPenalty();
-                System.out.println("Oplacono kare w wyoskosci:" +projectsFinished[projectTemp[chosedAction]].getPenalty());
+                System.out.println("Oplacono kare w wyoskosci:" + projectsFinished[projectTemp[chosedAction]].getPenalty());
             }
-        }
-        else if(projectsFinished[projectTemp[chosedAction]].dayToDeadLine >= 0) {}
-        else {
+        } else if (projectsFinished[projectTemp[chosedAction]].dayToDeadLine >= 0) {
+        } else {
             System.out.println("Niestety oddalas projekt po czasie wiec muszisz zaplacic kare.");
             companyCash -= projectsFinished[projectTemp[chosedAction]].getPenalty();
-            System.out.println("Oplacono kare w wyoskosci:" +projectsFinished[projectTemp[chosedAction]].getPenalty());
+            System.out.println("Oplacono kare w wyoskosci:" + projectsFinished[projectTemp[chosedAction]].getPenalty());
         }
-        if(projectsFinished[projectTemp[chosedAction]].client.paymentDelayWeek || projectsFinished[projectTemp[chosedAction]].client.paymentDelayMonth) {
-            if(projectsFinished[projectTemp[chosedAction]].client.paymentDelayMonth) {
+        if (projectsFinished[projectTemp[chosedAction]].client.paymentDelayWeek || projectsFinished[projectTemp[chosedAction]].client.paymentDelayMonth) {
+            if (projectsFinished[projectTemp[chosedAction]].client.paymentDelayMonth) {
                 System.out.println("Twoj klient spoznia sie z platnoscia ale obiecuje, ze otrzymasz pieniadze.");
                 delayedPaymentTime.add(30);
                 delayedPaymentValue.add(projectsFinished[projectTemp[chosedAction]].projectValue);
-            }
-            else {
+            } else {
                 System.out.println("Twoj klient spoznia sie z platnoscia ale obiecuje, ze otrzymasz pieniadze.");
                 delayedPaymentTime.add(7);
                 delayedPaymentValue.add(projectsFinished[projectTemp[chosedAction]].projectValue);
             }
-        }
-        else {
+        } else {
             companyCash += projectsFinished[projectTemp[chosedAction]].projectValue;
-            System.out.println("Twoj klient uregulowal platnosc za projekt. Nasza firma zyskala: "+projectsFinished[projectTemp[chosedAction]].projectValue);
+            System.out.println("Twoj klient uregulowal platnosc za projekt. Nasza firma zyskala: " + projectsFinished[projectTemp[chosedAction]].projectValue);
         }
         projectsFinished[projectTemp[chosedAction]] = null;
     }
+
     public void testCode() {
-        if(projectsFinished[0] == null) {
+        if (projectsFinished[0] == null) {
             System.out.println("Nie masz ukonczonych projektow ktorych kod moglbys testowac.");
             pressEnterToCont();
             return;
@@ -194,8 +188,9 @@ public class Menu {
         System.out.println("Masz teraz pewnosc, ze kod zostanie oddany bez bledow.");
 
     }
+
     public void workOnProject() {
-        if(projectsInProgress[0] == null) {
+        if (projectsInProgress[0] == null) {
             System.out.println("Nie masz projektow w trakcie realizacji.");
             return;
         }
@@ -317,7 +312,7 @@ public class Menu {
                 System.out.println("Work in Progress");
                 break;
             case 4:
-                System.out.println("Stan twojego konta to obecnie: "+companyCash);
+                System.out.println("Stan twojego konta to obecnie: " + companyCash);
                 pressEnterToCont();
                 break;
             case 5:
@@ -342,9 +337,9 @@ public class Menu {
     }
 
     public void checkAvalibleProject() {
-        for (int i = 0; i < project.length; i++) {
-            if (project[i] != null) {
-                showFullProjectInfo(project[i]);
+        for (ProjectGenerator projectGenerator : project) {
+            if (projectGenerator != null) {
+                showFullProjectInfo(projectGenerator);
                 System.out.println();
             }
         }
@@ -356,7 +351,7 @@ public class Menu {
         System.out.println("Czas ukończnia: " + project.getDayToDeadLine() + " dni.");
         System.out.println("Kara za przekroczenie terminu: " + project.getPenalty() + "$.");
         System.out.println("Wartosc projektu: " + project.getProjectValue() + "$.");
-        System.out.println("Klient: "+project.client.name);
+        System.out.println("Klient: " + project.client.name);
         if (project.getProjectLevel() == 1) {
             System.out.println("Poziom projektu: latwy.");
         } else if (project.getProjectLevel() == 2) {
@@ -380,32 +375,34 @@ public class Menu {
     }
 
     public void timeForProjects() {
-        for (int i = 0; i < projectsInProgress.length; i++) {
-            if (projectsInProgress[i] != null) {
-                projectsInProgress[i].dayToDeadLine--;
-                if (projectsInProgress[i].dayToDeadLine == 1) {
+        for (ProjectGenerator inProgress : projectsInProgress) {
+            if (inProgress != null) {
+                inProgress.dayToDeadLine--;
+                if (inProgress.dayToDeadLine == 1) {
                     //System.out.println("Zbliza sie termin oddania projektu, jesli go jutro nie oddasz moze sie to wiazac z kara.");
                     //pressEnterToCont();
                 }
             }
         }
     }
+
     public void delayedPayments() {
-        if(!delayedPaymentTime.isEmpty()) {
-            for(int i=0;i<delayedPaymentTime.size()-1;i++) {
+        if (!delayedPaymentTime.isEmpty()) {
+            for (int i = 0; i < delayedPaymentTime.size() - 1; i++) {
                 int temp = delayedPaymentTime.get(i);
                 temp--;
                 delayedPaymentTime.remove(i);
-                delayedPaymentTime.add(i,temp);
-                if(temp <= 0) {
+                delayedPaymentTime.add(i, temp);
+                if (temp <= 0) {
                     companyCash += delayedPaymentValue.get(i);
-                    System.out.println("Otrzymales zalegla platnosc za projekt o wyoskosci:"+delayedPaymentValue.get(i));
+                    System.out.println("Otrzymales zalegla platnosc za projekt o wyoskosci:" + delayedPaymentValue.get(i));
                     delayedPaymentTime.remove(i);
                     delayedPaymentValue.remove(i);
                 }
             }
         }
     }
+
     public void pressEnterToCont() {
         System.out.print("Nacisnij enter aby wyjsc...");
         Scanner scan = new Scanner(System.in);

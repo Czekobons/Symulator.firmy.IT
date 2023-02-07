@@ -1,5 +1,3 @@
-import java.util.Scanner;
-
 public class Main {
 
     public static void main(String[] args) {
@@ -10,13 +8,13 @@ public class Main {
         Integer dayCount = 1;
 
 
-        for(int i=0;i<3;i++) {
+        for (int i = 0; i < 3; i++) {
             menu.project[i] = new ProjectGenerator();
         }
 
         System.out.println("Witaj w symulatorze firmy IT!");
-        while(working) {
-            System.out.println(time.getGameDay()+"."+time.getGameMonth()+"."+time.getGameYear()+". Dzien: "+dayCount);
+        while (working) {
+            System.out.println(time.getGameDay() + "." + time.getGameMonth() + "." + time.getGameYear() + ". Dzien: " + dayCount);
 
             System.out.println();
             menu.showMenuList();
@@ -25,12 +23,11 @@ public class Main {
             menu.timeForProjects();
             menu.chceckIfFinished();
             menu.delayedPayments();
-            if(time.getGameDay()==1 && dayCount != 1) {
-                if(menu.dealWithBurdens <2) {
+            if (time.getGameDay() == 1 && dayCount != 1) {
+                if (menu.dealWithBurdens < 2) {
                     System.out.println("Przykro mi ale skarbowka wjechala z kontrola, mozemy zamykac interes. Milo sie z toba pracowalo");
                     System.exit(0);
-                }
-                else {
+                } else {
                     menu.dealWithBurdens = 0;
                 }
             }
@@ -41,8 +38,6 @@ public class Main {
             }
         }
     }
-
-
 
 
 }
